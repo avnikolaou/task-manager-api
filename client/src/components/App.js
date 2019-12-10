@@ -1,0 +1,15 @@
+import React, { Component } from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+
+class App extends Component {
+    render() {
+        return (
+            <div>
+                Hello from REACT!
+            </div>
+        );
+    }
+}
+
+export default connect(null) (App);
