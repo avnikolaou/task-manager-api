@@ -10,8 +10,10 @@ import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, compose} from "redux";
 import reduxThunk from 'redux-thunk';
 
+import combinereducers from './reducers';
 
-const store = createStore(() => [], {}, compose(applyMiddleware(reduxThunk), window.__REDUX_DEVTOOLS_EXTENSION__ &&
+
+const store = createStore(combinereducers, {}, compose(applyMiddleware(reduxThunk), window.__REDUX_DEVTOOLS_EXTENSION__ &&
     window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 ReactDOM.render(
