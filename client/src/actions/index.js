@@ -1,5 +1,6 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode'
 import setAuthToken from '../utils/setAuthToken';
 import { FETCH_USER } from './types';
 
