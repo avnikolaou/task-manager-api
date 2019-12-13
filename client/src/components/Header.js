@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import lodash from 'lodash';
 import { loginUser, logoutUser } from "../actions";
 
 class Header extends Component {
@@ -13,13 +14,16 @@ class Header extends Component {
     };
 
     renderContent() {
-        switch (this.props.auth.isAuthenticated) {
-            case null:
-                return;
-            case false:
-                return <Link to={'/login'} className={"btn btn-info m-1 d-flex"}>Login</Link>;
+        switch (lodash.isEmpty(this.props.auth.user)) {
             case true:
-                return <button className={"btn btn-info m-1 d-flex"} onClick={this.onLogoutClick}>Logout {this.props.auth.name}</button>;
+                return <Link to={'/login'} className={"btn btn-info m-1 d-flex"}>Login</Link>;
+            case false:
+                return [
+                    <li className="nav-item"><Link to={'/tasks'} className={"btn btn-info m-1 d-flex"}>Tasks</Link></li>,
+                    <li className="nav-item"><button className={"btn btn-info m-1 d-flex"} onClick={this.onLogoutClick}>Logout {this.props.auth.user.name.split(" ")[0]}</button></li>
+                ];
+            default:
+                return;
         }
     }
 
@@ -34,9 +38,7 @@ class Header extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarCollapse">
                         <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                {this.renderContent()}
-                            </li>
+                            {this.renderContent()}
                         </ul>
                     </div>
                 </div>
@@ -46,7 +48,7 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-    auth: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
