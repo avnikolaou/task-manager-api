@@ -26,11 +26,14 @@ export const fetchCurrentUser = (userId) => async dispatch => {
 };
 
 export const logoutUser = () => async dispatch => {
-    // Remove token from local storage
-    localStorage.removeItem("jwtToken");
-    // Remove auth header for future requests
-    setAuthToken(false);
-    // Set current user to empty object {} which will set isAuthenticated to false
+    const res = await axios.post('api/users/logout');
+    if (res.status === 200) {
+        // Remove token from local storage
+        localStorage.removeItem("jwtToken");
+        // Remove auth header for future requests
+        setAuthToken(false);
+        // Set current user to empty object {} which will set isAuthenticated to false
 
-    dispatch({ type: FETCH_USER, payload:{} });
+        dispatch({ type: FETCH_USER, payload:{} });
+    }
 };

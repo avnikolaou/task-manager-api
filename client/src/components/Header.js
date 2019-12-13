@@ -19,8 +19,8 @@ class Header extends Component {
                 return <Link to={'/login'} className={"btn btn-info m-1 d-flex"}>Login</Link>;
             case false:
                 return [
-                    <li className="nav-item"><Link to={'/tasks'} className={"btn btn-info m-1 d-flex"}>Tasks</Link></li>,
-                    <li className="nav-item"><button className={"btn btn-info m-1 d-flex"} onClick={this.onLogoutClick}>Logout {this.props.auth.user.name.split(" ")[0]}</button></li>
+                    <li key={1} className="nav-item"><Link to={'/tasks'} className={"btn btn-info m-1 d-flex"}>Tasks</Link></li>,
+                    <li key={2} className="nav-item"><button className={"btn btn-info m-1 d-flex"} onClick={this.onLogoutClick}>Logout {this.props.auth.user.name.split(" ")[0]}</button></li>
                 ];
             default:
                 return;
