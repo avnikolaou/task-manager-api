@@ -16,13 +16,13 @@ class Login extends Component {
 
     componentDidMount() {
         // If logged in and user navigates to Login page, should redirect them to tasks
-        if (this.props.auth.isAuthenticated) {
+        if (this.props.authentication.isAuthenticated) {
             this.props.history.push("/tasks");
         }
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        if (nextProps.auth.isAuthenticated) {
+        if (nextProps.authentication.isAuthenticated) {
             this.props.history.push('/tasks');
         }
     }
@@ -90,11 +90,11 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-    auth: PropTypes.object.isRequired,
+    authentication: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth,
+    authentication: state.authentication,
 });
 
 export default connect(mapStateToProps, { loginUser })(Login)
