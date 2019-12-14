@@ -46,7 +46,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.authentication
 });
 
 export default connect(mapStateToProps, { fetchCurrentUser, loginUser, fetchUser, logoutUser })(App);
