@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import jwt_decode from 'jwt-decode'
-import { fetchCurrentUser, loginUser, fetchUser } from "../actions";
+import { fetchCurrentUser, loginUser, fetchUser, logoutUser } from "../actions";
 import '../App.css';
 
 import Header from './Header';
@@ -11,16 +11,21 @@ import Login from './Login';
 import Landing from './Landing';
 import Tasks from './Tasks';
 
-class App extends Component {
 
-    componentDidMount() {
-        if (localStorage.jwtToken) {
-            const token = localStorage.jwtToken;
-            const decodedToken = jwt_decode(token);
-            const userId = decodedToken._id;
-            this.props.fetchCurrentUser(userId);
-        }
+if (localStorage.jwtToken) {
+    const token = localStorage.jwtToken;
+    const decodedToken = jwt_decode(token);
+    const userId = decodedToken._id;
+    fetchCurrentUser(userId);
+
+    const currentTime = Date.now() / 1000;
+
+    if (token.exp < currentTime) {
+        logoutUser();
     }
+}
+
+class App extends Component {
 
     render() {
         return (
@@ -44,4 +49,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { fetchCurrentUser, loginUser, fetchUser })(App);
+export default connect(mapStateToProps, { fetchCurrentUser, loginUser, fetchUser, logoutUser })(App);
