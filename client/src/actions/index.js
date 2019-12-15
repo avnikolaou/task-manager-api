@@ -13,16 +13,10 @@ export const loginUser = userData => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res.data.user })
 };
 
-export const fetchUser = () => async dispatch => {
-    const res = await axios.get('api/users/me');
-    console.log('ACTION FETCH USER: ' + res.data.user);
-    dispatch({ type: FETCH_USER, payload: res.data.user });
-};
 
 export const fetchCurrentUser = (userId) => async dispatch => {
     const res = await axios.get(`api/users/${userId}`);
     dispatch({ type: FETCH_USER, payload: res.data });
-    dispatch({ type: USER_LOADING, payload: true });
 };
 
 export const logoutUser = () => async dispatch => {
