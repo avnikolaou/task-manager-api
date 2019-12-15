@@ -1,9 +1,10 @@
-import { FETCH_USER } from '../actions/types';
+import { FETCH_USER, USER_LOADING } from '../actions/types';
 const lodash = require('lodash');
 
 const initialState = {
     isAuthenticated: false,
-    user: {}
+    user: {},
+    loading: false
 };
 
 export default function(state = initialState, action) {

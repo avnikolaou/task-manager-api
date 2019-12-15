@@ -5,13 +5,13 @@ import { connect } from 'react-redux';
 class Tasks extends Component {
     componentWillMount() {
         // If not logged in and user navigates to Tasks page, should redirect them to Landing
-        if (!this.props.authentication.isAuthenticated) {
+        if (!this.props.auth.isAuthenticated) {
             this.props.history.push("/");
         }
     }
 
     render() {
-        const { user } = this.props.authentication;
+        const { user } = this.props.auth;
         return (
             <div>
                 <div className={'container mt-4'}>
@@ -28,11 +28,11 @@ class Tasks extends Component {
 }
 
 Tasks.propTypes = {
-    authentication: PropTypes.object.isRequired
+    auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-    authentication: state.authentication
+    auth: state.auth
 });
 
 export default connect(mapStateToProps)(Tasks)
