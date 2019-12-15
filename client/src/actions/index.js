@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
-import {FETCH_USER, USER_LOADING} from './types';
+import { FETCH_TASKS, FETCH_USER } from './types';
 
 export const loginUser = userData => async dispatch => {
     const res = await axios.post('api/users/login', userData);
@@ -30,4 +30,9 @@ export const logoutUser = () => async dispatch => {
 
         dispatch({ type: FETCH_USER, payload:{} });
     }
+};
+
+export const getTasks = () => async dispatch => {
+    const res = await axios.get('api/tasks');
+    dispatch({ type: FETCH_TASKS, payload: res.data });
 };

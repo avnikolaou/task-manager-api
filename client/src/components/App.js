@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import jwt_decode from 'jwt-decode'
-import { fetchCurrentUser, logoutUser } from "../actions";
+import { fetchCurrentUser, logoutUser, getTasks } from "../actions";
 import setAuthToken from "../utils/setAuthToken";
 import '../App.css';
 
@@ -24,6 +24,7 @@ class App extends Component {
             const decodedToken = jwt_decode(token);
             const userId = decodedToken._id;
             this.props.fetchCurrentUser(userId);
+            this.props.getTasks();
 
             const currentTime = Date.now() / 1000; // to get in milliseconds
             if (decodedToken.exp < currentTime) {
@@ -62,4 +63,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps, { fetchCurrentUser, logoutUser })(App);
+export default connect(mapStateToProps, { fetchCurrentUser, logoutUser, getTasks })(App);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
-import { loginUser } from '../actions/index';
+import { loginUser, getTasks } from '../actions/index';
 import { connect } from 'react-redux';
 
 class Login extends Component {
@@ -24,6 +24,7 @@ class Login extends Component {
     componentWillReceiveProps(nextProps, nextContext) {
         if (nextProps.auth.isAuthenticated) {
             this.props.history.push('/tasks');
+            this.props.getTasks();
         }
     }
 
@@ -97,4 +98,4 @@ const mapStateToProps = state => ({
     auth: state.auth,
 });
 
-export default connect(mapStateToProps, { loginUser })(Login)
+export default connect(mapStateToProps, { loginUser, getTasks })(Login)
