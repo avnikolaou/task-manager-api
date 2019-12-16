@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import lodash from 'lodash';
-import { getTasks} from '../actions';
+import { getTasks , deleteTask } from '../actions';
 
 class Tasks extends Component {
     componentWillMount() {
@@ -11,6 +11,10 @@ class Tasks extends Component {
             this.props.history.push("/");
         }
     }
+
+    onDeleteClick = (e) => {
+        this.props.deleteTask(e.target.value);
+    };
 
     render() {
         const { user } = this.props.auth;
@@ -30,14 +34,14 @@ class Tasks extends Component {
                             </ul>
                             <div className="card-body">
                                 {task.completed ? <button className={'btn btn-warning mx-1 my-1'}>Pending!</button> : <button className={'btn btn-info mx-1 my-1'}>Complete</button>}
-                                <button className={'btn btn-danger mx-1 my-1'}>Delete</button>
+                                <button className={'btn btn-danger mx-1 my-1'} value={task._id} onClick={this.onDeleteClick}>Delete</button>
                             </div>
                         </div>
                     </div>
                 );
             });
         } else {
-            content = <div className={'text-center'}>Loading . . .</div>;
+            content = <h2 className={'text-center'}>It looks like you have no tasks scheduled...</h2>;
         }
 
         return (
@@ -51,7 +55,7 @@ class Tasks extends Component {
                 </div>
 
                 <div className={'container mt-4'}>
-                    <div className={'row'}>
+                    <div className={'row d-block'}>
                         <div className={'d-flex flex-wrap justify-content-around'}>
                             {content}
                         </div>
@@ -70,7 +74,6 @@ Tasks.propTypes = {
 const mapStateToProps = state => ({
     auth: state.auth,
     tasks: state.tasks
-
 });
 
-export default connect(mapStateToProps, { getTasks })(Tasks)
+export default connect(mapStateToProps, { getTasks, deleteTask })(Tasks)
