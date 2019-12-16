@@ -11,6 +11,7 @@ import Header from './Header';
 import Login from './Login';
 import Landing from './Landing';
 import Tasks from './Tasks';
+import Register from './Register';
 
 
 class App extends Component {
@@ -48,6 +49,7 @@ class App extends Component {
                     <Header/>
                     <Route exact path={'/'} component={Landing}/>
                     <Route exact path={'/login'} component={Login}/>
+                    <Route exact path={'/register'} component={Register}/>
                     <Route exact path={'/tasks'} component={Tasks}/>
                 </BrowserRouter>
             </div>

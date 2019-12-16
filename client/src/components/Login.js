@@ -46,7 +46,6 @@ class Login extends Component {
     render() {
         return (
             <div className="container mt-4">
-                <a href="/api/user/login">Login!</a>
                 <div className="row justify-content-center">
                     <div className="col-lg-4 col-md-offset-4 text-center">
                         <div className="panel panel-default">

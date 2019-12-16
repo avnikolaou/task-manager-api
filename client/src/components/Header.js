@@ -11,12 +11,16 @@ class Header extends Component {
         e.preventDefault();
         localStorage.getItem("jwtToken");
         this.props.logoutUser();
+        this.props.history.push("/");
     };
 
     renderContent() {
         switch (lodash.isEmpty(this.props.auth.user)) {
             case true:
-                return <Link to={'/login'} className={"btn btn-info m-1 d-flex"}>Login</Link>;
+                return [
+                    <Link key={1} to={'/login'} className={"btn btn-info m-1 d-flex"}>Login</Link>,
+                    <Link key={2} to={'/register'} className={"btn btn-info m-1 d-flex"}>Register</Link>
+                    ];
             case false:
                 return [
                     <li key={1} className="nav-item"><Link to={'/tasks'} className={"btn btn-info m-1 d-flex"}>Tasks</Link></li>,

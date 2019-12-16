@@ -2,7 +2,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import { FETCH_TASKS, FETCH_USER } from './types';
 
-export const loginUser = userData => async dispatch => {
+export const loginUser = (userData) => async dispatch => {
     const res = await axios.post('api/users/login', userData);
     // Set token to localStorage
     const token  =  res.data.token;
@@ -13,6 +13,16 @@ export const loginUser = userData => async dispatch => {
     dispatch({ type: FETCH_USER, payload: res.data.user })
 };
 
+export const registerUser = (userData) => async dispatch => {
+    const res = await axios.post('api/users', userData);
+    // Set token to localStorage
+    const token  =  res.data.token;
+    localStorage.setItem('jwtToken', token);
+    // Set token to Auth header
+    setAuthToken(token);
+
+    dispatch({ type: FETCH_USER, payload: res.data.user })
+};
 
 export const fetchCurrentUser = (userId) => async dispatch => {
     const res = await axios.get(`api/users/${userId}`);
