@@ -10,8 +10,7 @@ class Header extends Component {
     onLogoutClick = e => {
         e.preventDefault();
         localStorage.getItem("jwtToken");
-        this.props.logoutUser();
-        this.props.history.push("/");
+        window.location.href = "./"
     };
 
     renderContent() {
