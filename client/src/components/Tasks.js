@@ -25,7 +25,7 @@ class Tasks extends Component {
             content = tasks.map((task) => {
                 return (
                     <div key={task._id} className={'mx-2 my-4 col-lg-3 col-md-5 col-sm-12 text-center'}>
-                        <div className={'card'} style={{width: '18rem'}}>
+                        <div className={'card'}>
                             <div className="card-body">
                                 <h5 className="card-title">{task.description}</h5>
                             </div>
