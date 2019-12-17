@@ -1,17 +1,40 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
-import { Button, Modal} from 'react-bootstrap'
+import { Button, Modal, Form} from 'react-bootstrap'
 import lodash from 'lodash';
-import { getTasks , deleteTask, updateTask, openModal, closeModal } from '../actions';
+import { getTasks , deleteTask, updateTask, openModal, closeModal, addTask } from '../actions';
 
 class Tasks extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            description: "",
+            completed: false
+        };
+    };
+
+    onChange = e => {
+        this.setState({ [e.target.id]: e.target.value });
+    };
+
+    onSubmit = e => {
+        e.preventDefault();
+
+        const userData = {
+            description: this.state.description,
+            completed: this.state.completed
+        };
+
+        this.props.addTask(userData);
+    };
+
     componentWillMount() {
         // If not logged in and user navigates to Tasks page, should redirect them to Landing
         if (!this.props.auth.isAuthenticated) {
             this.props.history.push("/");
         }
-    }
+    };
 
     onDeleteClick = (e) => {
         this.props.deleteTask(e.target.value);
@@ -31,10 +54,6 @@ class Tasks extends Component {
 
     closeModal = () => {
         this.props.closeModal();
-    };
-
-    addTask = () => {
-
     };
 
     render() {
@@ -83,14 +102,15 @@ class Tasks extends Component {
                             <Button variant="primary" onClick={this.openModal}>Add task</Button>
 
                             <Modal show={myModal.openModal} animation={true} onHide={this.closeModal}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Modal heading</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={this.closeModal}>Close</Button>
-                                    <Button variant="primary">Save Changes</Button>
-                                </Modal.Footer>
+                                <Form style={{padding: '20px'}} onSubmit={this.onSubmit}>
+                                    <Form.Group>
+                                        <Form.Label>Description</Form.Label>
+                                        <Form.Control onChange={this.onChange} value={this.state.email} id={'description'} type="text" placeholder="Enter your description" />
+                                    </Form.Group>
+                                    <Button variant="primary" type="submit">
+                                        Submit
+                                    </Button>
+                                </Form>
                             </Modal>
                         </div>
                     </div>
@@ -120,4 +140,4 @@ const mapStateToProps = state => ({
     modal: state.modal
 });
 
-export default connect(mapStateToProps, { getTasks, deleteTask, updateTask, openModal, closeModal })(Tasks)
+export default connect(mapStateToProps, { getTasks, deleteTask, updateTask, openModal, closeModal, addTask })(Tasks)

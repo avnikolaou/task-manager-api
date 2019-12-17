@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 
 class Login extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             email: "",
             password: "",

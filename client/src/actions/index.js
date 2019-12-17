@@ -60,9 +60,16 @@ export const updateTask = (taskId, completed) => async dispatch => {
 };
 
 export const openModal = () => dispatch => {
-    dispatch({ type: OPEN_MODAL, payload: true })
+    dispatch({ type: OPEN_MODAL, payload: true });
 };
 
 export const closeModal = () => dispatch => {
-    dispatch({ type: OPEN_MODAL, payload: false })
+    dispatch({ type: OPEN_MODAL, payload: false });
+};
+
+export const addTask = (userData) => async dispatch => {
+    await axios.post('api/tasks', userData);
+    const res = await axios.get('api/tasks');
+    dispatch({ type: FETCH_TASKS, payload: res.data });
+    dispatch({ type: OPEN_MODAL, payload: false });
 };
