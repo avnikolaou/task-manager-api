@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import lodash from 'lodash';
-import { getTasks , deleteTask } from '../actions';
+import { getTasks , deleteTask, updateTask } from '../actions';
 
 class Tasks extends Component {
     componentWillMount() {
@@ -14,6 +14,14 @@ class Tasks extends Component {
 
     onDeleteClick = (e) => {
         this.props.deleteTask(e.target.value);
+    };
+
+    onUpdateTaskClick = (e) => {
+        if (e.target.innerHTML === 'Complete') {
+            this.props.updateTask(e.target.value, { completed: true });
+        } else {
+            this.props.updateTask(e.target.value, { completed: false });
+        }
     };
 
     render() {
@@ -33,7 +41,8 @@ class Tasks extends Component {
                                 <li className="list-group-item">Status: {task.completed ? 'Completed' : 'Pending'}</li>
                             </ul>
                             <div className="card-body">
-                                {task.completed ? <button className={'btn btn-warning mx-1 my-1'}>Pending!</button> : <button className={'btn btn-info mx-1 my-1'}>Complete</button>}
+                                {task.completed ? <button className={'btn btn-warning mx-1 my-1'} value={task._id} onClick={this.onUpdateTaskClick}>Pending</button>
+                                    : <button className={'btn btn-info mx-1 my-1'} value={task._id} onClick={this.onUpdateTaskClick}>Complete</button>}
                                 <button className={'btn btn-danger mx-1 my-1'} value={task._id} onClick={this.onDeleteClick}>Delete</button>
                             </div>
                         </div>
@@ -76,4 +85,4 @@ const mapStateToProps = state => ({
     tasks: state.tasks
 });
 
-export default connect(mapStateToProps, { getTasks, deleteTask })(Tasks)
+export default connect(mapStateToProps, { getTasks, deleteTask, updateTask })(Tasks)
