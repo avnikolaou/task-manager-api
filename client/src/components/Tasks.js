@@ -17,11 +17,11 @@ class Tasks extends Component {
     };
 
     onUpdateTaskClick = (e) => {
-        if (e.target.innerHTML === 'Complete') {
-            this.props.updateTask(e.target.value, { completed: true });
-        } else {
-            this.props.updateTask(e.target.value, { completed: false });
+        if (e.target.innerHTML === 'Done') {
+            return this.props.updateTask(e.target.value, { completed: true });
         }
+
+        return this.props.updateTask(e.target.value, { completed: false });
     };
 
     render() {
@@ -42,7 +42,7 @@ class Tasks extends Component {
                             </ul>
                             <div className="card-body">
                                 {task.completed ? <button className={'btn btn-warning mx-1 my-1'} value={task._id} onClick={this.onUpdateTaskClick}>Pending</button>
-                                    : <button className={'btn btn-info mx-1 my-1'} value={task._id} onClick={this.onUpdateTaskClick}>Complete</button>}
+                                    : <button className={'btn btn-success mx-1 my-1'} value={task._id} onClick={this.onUpdateTaskClick}>Done</button>}
                                 <button className={'btn btn-danger mx-1 my-1'} value={task._id} onClick={this.onDeleteClick}>Delete</button>
                             </div>
                         </div>
