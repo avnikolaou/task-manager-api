@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
+import { Button, Modal} from 'react-bootstrap'
 import lodash from 'lodash';
-import { getTasks , deleteTask, updateTask } from '../actions';
+import { getTasks , deleteTask, updateTask, openModal, closeModal } from '../actions';
 
 class Tasks extends Component {
     componentWillMount() {
@@ -24,9 +25,22 @@ class Tasks extends Component {
         return this.props.updateTask(e.target.value, { completed: false });
     };
 
+    openModal = () => {
+        this.props.openModal();
+    };
+
+    closeModal = () => {
+        this.props.closeModal();
+    };
+
+    addTask = () => {
+
+    };
+
     render() {
         const { user } = this.props.auth;
         const { tasks } = this.props.tasks;
+        const myModal = this.props.modal;
         let content;
 
         if (!lodash.isEmpty(tasks)) {
@@ -64,6 +78,25 @@ class Tasks extends Component {
                 </div>
 
                 <div className={'container mt-4'}>
+                    <div className={'row d-block text-center'}>
+                        <div className={'col-sm-12'}>
+                            <Button variant="primary" onClick={this.openModal}>Add task</Button>
+
+                            <Modal show={myModal.openModal} animation={true} onHide={this.closeModal}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Modal heading</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="secondary" onClick={this.closeModal}>Close</Button>
+                                    <Button variant="primary">Save Changes</Button>
+                                </Modal.Footer>
+                            </Modal>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={'container mt-4'}>
                     <div className={'row d-block'}>
                         <div className={'d-flex flex-wrap justify-content-around'}>
                             {content}
@@ -77,12 +110,14 @@ class Tasks extends Component {
 
 Tasks.propTypes = {
     auth: PropTypes.object.isRequired,
-    tasks: PropTypes.object.isRequired
+    tasks: PropTypes.object.isRequired,
+    modal: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
     auth: state.auth,
-    tasks: state.tasks
+    tasks: state.tasks,
+    modal: state.modal
 });
 
-export default connect(mapStateToProps, { getTasks, deleteTask, updateTask })(Tasks)
+export default connect(mapStateToProps, { getTasks, deleteTask, updateTask, openModal, closeModal })(Tasks)

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
-import { FETCH_TASKS, FETCH_USER } from './types';
+import {FETCH_TASKS, FETCH_USER, OPEN_MODAL} from './types';
 
 export const loginUser = (userData) => async dispatch => {
     const res = await axios.post('api/users/login', userData);
@@ -57,4 +57,12 @@ export const updateTask = (taskId, completed) => async dispatch => {
     await axios.patch(`api/tasks/${taskId}`, completed);
     const res = await axios.get('api/tasks');
     dispatch({ type: FETCH_TASKS, payload: res.data })
+};
+
+export const openModal = () => dispatch => {
+    dispatch({ type: OPEN_MODAL, payload: true })
+};
+
+export const closeModal = () => dispatch => {
+    dispatch({ type: OPEN_MODAL, payload: false })
 };
