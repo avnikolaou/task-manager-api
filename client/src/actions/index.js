@@ -47,6 +47,11 @@ export const getTasks = () => async dispatch => {
     dispatch({ type: FETCH_TASKS, payload: res.data });
 };
 
+export const getFilteredTasks = (completed) => async dispatch => {
+    const res = await axios.get(`api/tasks?completed=${completed}`);
+    dispatch({ type: FETCH_TASKS, payload: res.data });
+};
+
 export const deleteTask = (taskId) => async dispatch => {
     await axios.delete(`api/tasks/${taskId}`);
     const res = await axios.get('api/tasks');

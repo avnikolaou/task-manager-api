@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { Button, Modal, Form} from 'react-bootstrap'
 import lodash from 'lodash';
-import { getTasks , deleteTask, updateTask, openModal, closeModal, addTask } from '../actions';
+import { getTasks, getFilteredTasks, deleteTask, updateTask, openModal, closeModal, addTask } from '../actions';
 
 class Tasks extends Component {
     constructor(props) {
@@ -56,6 +56,14 @@ class Tasks extends Component {
         this.props.closeModal();
     };
 
+    filterTasks = (e) => {
+        if (e.target.value === 'completed') {
+            return this.props.getFilteredTasks(true);
+        }
+
+        return this.props.getFilteredTasks(false);
+    };
+
     render() {
         const { user } = this.props.auth;
         const { tasks } = this.props.tasks;
@@ -97,6 +105,16 @@ class Tasks extends Component {
                 </div>
 
                 <div className={'container mt-4'}>
+                    <div className={'row'}>
+                        <div className={'col-sm-12 text-center'}>
+                            <input className={"mx-2"} type="radio" name="tasks" value="all" defaultChecked onChange={this.props.getTasks}/> All Tasks
+                            <input className={"mx-2"} type="radio" name="tasks" value="completed" onChange={this.filterTasks}/> Completed Tasks
+                            <input className={"mx-2"} type="radio" name="tasks" value="pending" onChange={this.filterTasks}/> Pending Tasks
+                        </div>
+                    </div>
+                </div>
+
+                <div className={'container mt-4'}>
                     <div className={'row d-block text-center'}>
                         <div className={'col-sm-12'}>
                             <Button variant="primary" onClick={this.openModal}>Add task</Button>
@@ -115,6 +133,8 @@ class Tasks extends Component {
                         </div>
                     </div>
                 </div>
+
+
 
                 <div className={'container mt-4'}>
                     <div className={'row d-block'}>
@@ -140,4 +160,4 @@ const mapStateToProps = state => ({
     modal: state.modal
 });
 
-export default connect(mapStateToProps, { getTasks, deleteTask, updateTask, openModal, closeModal, addTask })(Tasks)
+export default connect(mapStateToProps, { getTasks, getFilteredTasks, deleteTask, updateTask, openModal, closeModal, addTask })(Tasks)
